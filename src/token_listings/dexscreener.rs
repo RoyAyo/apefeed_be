@@ -1,7 +1,7 @@
 use std::error::Error as StdError;
-use crate::utils;
+use crate::{utils, EnvVar};
 
-pub async fn fetch_tokens() -> Result<serde_json::Value, Box<dyn StdError>> {
+pub async fn fetch_tokens(_env_var: &EnvVar) -> Result<serde_json::Value, Box<dyn StdError>> {
     let url = "https://api.dexscreener.com/token-profiles/latest/v1";
     match utils::helpers::fetch_get(url, None).await {
         Ok(body) => {

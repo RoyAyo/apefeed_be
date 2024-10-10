@@ -1,10 +1,11 @@
-use actix_web::{get, HttpResponse};
+use actix_web::{get, web, HttpResponse};
 
-use crate::{token_listings, utils::response::{ErrorResponse, SuccessResponse}};
+use crate::{token_listings, utils::response::{ErrorResponse, SuccessResponse}, EnvVar};
 
 #[get("/top_traders")]
-async fn get_top_traders() -> HttpResponse {
-    match token_listings::birdeye::get_top_traders().await {
+async fn get_top_traders(app_state: web::Data<EnvVar>) -> HttpResponse {
+    let env_var = app_state.get_ref();
+    match token_listings::birdeye::get_top_traders(env_var).await {
         Ok(body) => {
             let response = SuccessResponse {
                 data: body,

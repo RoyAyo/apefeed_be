@@ -8,6 +8,7 @@ pub async fn fetch_get(url: &str, headers: Option<Vec<(&str, &str)>>) -> Result<
     if let Some(headers) = headers {
         for (key, value) in headers {
             request = request.header(key, value);
+            println!("{}: {}", key, value);
         }
     }
     
